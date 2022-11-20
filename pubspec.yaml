@@ -40,7 +40,7 @@ dependencies:
   provider:
   http:
   shared_preferences:
-  geolocator: 
+  geolocator:
 
 dev_dependencies:
   flutter_test:
