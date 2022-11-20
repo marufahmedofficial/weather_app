@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:provider/provider.dart';
+
+import '../provider/weather_provider.dart';
 
 class HomePage extends StatefulWidget {
-  static const String routeName='/';
+  static const String routeName = '/';
   const HomePage({Key? key}) : super(key: key);
 
   @override
@@ -10,21 +13,41 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
+  late WeatherProvider weatherProvider;
+  bool calledOnce = true;
+  bool isLoading = true;
   @override
-  void initState() {
-   _determinePosition().then((position) => {
-     print('Latitude : ${position.latitude} and ${position.longitude}')
-   });
-    super.initState();
+  void didChangeDependencies() {
+    if (calledOnce) {
+      weatherProvider = Provider.of<WeatherProvider>(context);
+      _determinePosition().then((position) {
+        print('Latitude : ${position.latitude} and ${position.longitude}');
+        weatherProvider.getCurrentWeatherData(position).then((value) {
+          setState(() {
+            isLoading = false;
+          });
+        });
+      });
+    }
+    calledOnce = false;
+    super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Weather App Project'),
-        centerTitle: true,
+        title: Text('Weather App'),
+      ),
+      body: ListView(
+        children: [
+          isLoading
+              ? CircularProgressIndicator()
+              : Text(
+            '${weatherProvider.currentWeatherResponse.main!.temp}',
+            style: TextStyle(fontSize: 24),
+          )
+        ],
       ),
     );
   }
