@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:weather_app/pages/home_page.dart';
+import 'package:weather_app/provider/weather_provider.dart';
 
 void main() {
- runApp(const MyApp());
+ runApp(MultiProvider(
+     providers: [
+       ChangeNotifierProvider(create: (context)=> WeatherProvider() )
+     ],
+     child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
