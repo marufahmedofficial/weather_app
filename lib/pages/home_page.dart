@@ -42,10 +42,11 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue,
+      backgroundColor: Colors.grey.shade900,
       appBar: AppBar(
         elevation: 0,
         title: const Text('Weather App'),
+        backgroundColor: Colors.transparent,
         actions: [
           IconButton(
             onPressed: () {},
