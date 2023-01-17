@@ -74,6 +74,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: weatherProvider.hasDataLoaded
           ? ListView(
+        physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
               children: [
                 _currentWeatherSection(),
                 _forecastWeatherSection(),
@@ -82,6 +83,7 @@ class _HomePageState extends State<HomePage> {
           : const Center(
               child: CircularProgressIndicator(
                 color: Colors.white,
+
               ),
             ),
     );
